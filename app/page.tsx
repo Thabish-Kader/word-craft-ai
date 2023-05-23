@@ -1,12 +1,10 @@
 import Image from "next/image";
 import { TextEditor } from "./components/TextEditor";
-import { TextEditor2 } from "./components/TextEditor2";
 
 export default function Home() {
 	return (
-		<main className="">
+		<main className="mx-auto max-w-5xl mt-10 ">
 			<TextEditor />
-			{/* <TextEditor2 /> */}
 		</main>
 	);
 }

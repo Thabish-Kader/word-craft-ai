@@ -11,13 +11,6 @@
 .ql-container.ql-snow .ql-toolbar.ql-toolbar {
 }
 
-#editor {
-	height: 400px;
-}
-.ql-spanblock:after {
-	content: "<sb/>";
-}
-
 .spanblock {
 	background-color: "black";
 	border: 1px solid #ccc;
@@ -25,4 +18,7 @@
 	padding: 6px 10px;
 	border-radius: 3px;
 	margin: 15px 0;
+}
+
+.ql-formats {
 }

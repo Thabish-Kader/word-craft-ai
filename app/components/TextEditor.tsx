@@ -59,7 +59,7 @@ export const TextEditor = () => {
 			onChange={setValue}
 			modules={modules}
 			formats={formats}
-			className=""
+			className="bg-primary h-[700px] text-white"
 		/>
 	);
 };
