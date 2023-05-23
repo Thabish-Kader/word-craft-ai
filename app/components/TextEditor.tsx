@@ -1,9 +1,15 @@
 "use client";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import dynamic from "next/dynamic";
 
 export const TextEditor = () => {
+	const [value, setValue] = useState("");
+	const ReactQuill = useMemo(
+		() => dynamic(() => import("react-quill"), { ssr: false }),
+		[]
+	);
 	const modules = {
 		toolbar: [
 			[{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -29,14 +35,11 @@ export const TextEditor = () => {
 		"font",
 	];
 
-	const handleChange = (content) => {
-		console.log(content);
-	};
-
 	return (
 		<ReactQuill
 			theme="snow"
-			onChange={handleChange}
+			value={value}
+			onChange={setValue}
 			modules={modules}
 			formats={formats}
 		/>
