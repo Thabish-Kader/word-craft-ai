@@ -1,16 +1,14 @@
 /* Change background color to black */
-.ql-container {
+.ql-container.ql-snow {
+	border: 1px solid #30363d;
+}
+
+.ql-toolbar.ql-snow {
+	border: 1px solid #30363d;
+	background-color: #0d1117;
 }
 
 /* Change toolbar background color to blue */
-.ql-toolbar {
-	background-color: aliceblue;
-}
-
-/* Change toolbar border color to blue */
-.ql-toolbar,
-.ql-container.ql-snow .ql-toolbar.ql-toolbar {
-}
 
 .spanblock {
 	background-color: "black";
@@ -20,6 +18,7 @@
 	border-radius: 3px;
 	margin: 15px 0;
 }
-
-.ql-formats {
+.ql-container {
+	background-color: #010409;
+	height: 700px;
 }
