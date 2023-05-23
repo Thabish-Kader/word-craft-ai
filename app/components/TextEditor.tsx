@@ -1,9 +1,11 @@
 "use client";
 import React, { useMemo, useState } from "react";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "./custom-quill.css";
 import dynamic from "next/dynamic";
+import axios from "axios";
+import Quill, { DeltaStatic, Sources } from "quill";
+import { UnprivilegedEditor } from "react-quill";
 
 export const TextEditor = () => {
 	const [value, setValue] = useState("");
@@ -52,14 +54,37 @@ export const TextEditor = () => {
 		"align",
 	];
 
+	const giveSuggest = async () => {
+		console.log(value);
+		// const res = await axios.get("/aiassit")
+	};
+
+	const justTexts = (
+		value: string,
+		delta: DeltaStatic,
+		source: Sources,
+		editor: UnprivilegedEditor
+	) => {
+		const text = editor.getText(value as any);
+		setValue(text);
+	};
+
 	return (
-		<ReactQuill
-			theme="snow"
-			value={value}
-			onChange={setValue}
-			modules={modules}
-			formats={formats}
-			className=" text-gray-300"
-		/>
+		<>
+			<ReactQuill
+				theme="snow"
+				value={value}
+				onChange={justTexts}
+				modules={modules}
+				formats={formats}
+				className=" text-gray-300"
+			/>
+			<button
+				onClick={giveSuggest}
+				className="bg-blue-500 text-white px-4 py-2 rounded-md"
+			>
+				Click
+			</button>
+		</>
 	);
 };
