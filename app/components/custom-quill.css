@@ -1,0 +1,28 @@
+/* Change background color to black */
+.ql-container {
+}
+
+/* Change toolbar background color to blue */
+.ql-toolbar {
+}
+
+/* Change toolbar border color to blue */
+.ql-toolbar,
+.ql-container.ql-snow .ql-toolbar.ql-toolbar {
+}
+
+#editor {
+	height: 400px;
+}
+.ql-spanblock:after {
+	content: "<sb/>";
+}
+
+.spanblock {
+	background-color: "black";
+	border: 1px solid #ccc;
+	line-height: 19px;
+	padding: 6px 10px;
+	border-radius: 3px;
+	margin: 15px 0;
+}
