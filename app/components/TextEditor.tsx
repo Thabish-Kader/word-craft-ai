@@ -56,20 +56,18 @@ export const TextEditor = () => {
 	];
 
 	const giveSuggest = async () => {
-		console.log(value);
+		const suggest = stripHtmlTags(value);
 		const { data } = await axios.post("/aiassit", {
-			suggest: value,
+			suggest: suggest,
 		});
 		console.log(data);
 	};
 
-	const justTexts = (
-		content: string,
-		delta: DeltaStatic,
-		source: Sources,
-		editor: UnprivilegedEditor
-	) => {
-		setValue(editor.getText());
+	// function to strip away the html in value state
+	const stripHtmlTags = (html: string): string => {
+		const tmp = document.createElement("DIV");
+		tmp.innerHTML = html;
+		return tmp.textContent || tmp.innerText || "";
 	};
 
 	return (
@@ -77,7 +75,7 @@ export const TextEditor = () => {
 			<ReactQuill
 				theme="snow"
 				value={value}
-				onChange={justTexts}
+				onChange={setValue}
 				modules={modules}
 				formats={formats}
 				className=" text-gray-300"
