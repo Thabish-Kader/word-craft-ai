@@ -13,6 +13,7 @@ export const TextEditor = () => {
 		() => dynamic(() => import("react-quill"), { ssr: false }),
 		[]
 	);
+
 	const modules = {
 		toolbar: [
 			["bold", "italic", "underline", "strike"], // toggled buttons
@@ -56,17 +57,19 @@ export const TextEditor = () => {
 
 	const giveSuggest = async () => {
 		console.log(value);
-		// const res = await axios.get("/aiassit")
+		const { data } = await axios.post("/aiassit", {
+			suggest: value,
+		});
+		console.log(data);
 	};
 
 	const justTexts = (
-		value: string,
+		content: string,
 		delta: DeltaStatic,
 		source: Sources,
 		editor: UnprivilegedEditor
 	) => {
-		const text = editor.getText(value as any);
-		setValue(text);
+		setValue(editor.getText());
 	};
 
 	return (
