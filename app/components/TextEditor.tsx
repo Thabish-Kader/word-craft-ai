@@ -4,8 +4,6 @@ import "react-quill/dist/quill.snow.css";
 import "./custom-quill.css";
 import dynamic from "next/dynamic";
 import axios from "axios";
-import Quill, { DeltaStatic, Sources } from "quill";
-import { UnprivilegedEditor } from "react-quill";
 
 export const TextEditor = () => {
 	const [value, setValue] = useState("");
@@ -60,7 +58,8 @@ export const TextEditor = () => {
 		const { data } = await axios.post("/aiassit", {
 			suggest: suggest,
 		});
-		console.log(data);
+		const { aiPrompt } = data;
+		setValue("");
 	};
 
 	// function to strip away the html in value state
