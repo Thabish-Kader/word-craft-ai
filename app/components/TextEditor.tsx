@@ -70,26 +70,31 @@ export const TextEditor = () => {
 		return tmp.textContent || tmp.innerText || "";
 	};
 
-	const handleKeyDown = (event: React.KeyboardEvent) => {
+	const handleKeyDown = async (event: React.KeyboardEvent) => {
 		if (event.key === "Tab") {
 			event.preventDefault();
-			// giveSuggest();
-			setValue(value + prompt);
-		}
-	};
-
-	useEffect(() => {
-		const giveSuggest = async () => {
 			const suggest = stripHtmlTags(value);
 			const { data } = await axios.post("/aiassit", {
 				suggest: suggest,
 			});
 			const { aiPrompt } = data;
-			setPrompt(aiPrompt); // Update the prompt state with the received prompt from the backend
-		};
+			setPrompt(aiPrompt);
+			setValue(value + aiPrompt);
+		}
+	};
 
-		giveSuggest();
-	}, [value]);
+	// useEffect(() => {
+	// 	const giveSuggest = async () => {
+	// 		const suggest = stripHtmlTags(value);
+	// 		const { data } = await axios.post("/aiassit", {
+	// 			suggest: suggest,
+	// 		});
+	// 		const { aiPrompt } = data;
+	// 		setPrompt(aiPrompt); // Update the prompt state with the received prompt from the backend
+	// 	};
+
+	// 	giveSuggest();
+	// }, [value]);
 
 	return (
 		<>
