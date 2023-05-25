@@ -2,20 +2,15 @@
 import React, { useEffect, useMemo, useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import "./custom-quill.css";
-import dynamic from "next/dynamic";
+
 import axios from "axios";
-import ReactQuill from "react-quill";
-import { extractWordsAfterSlash } from "@/utils/helpers";
+import ReactQuill, { Quill } from "react-quill";
+import { extractWordsAfterSlash, stripHtmlTags } from "@/utils/helpers";
 
 export const TextEditorv2 = () => {
 	const [value, setValue] = useState("");
 	const [prompt, setPrompt] = useState("");
 	const editorRef = React.useRef<ReactQuill>(null);
-
-	// const ReactQuill = useMemo(
-	// 	() => dynamic(() => import("react-quill"), { ssr: false }),
-	// 	[]
-	// );
 
 	const modules = {
 		toolbar: [
@@ -58,19 +53,12 @@ export const TextEditorv2 = () => {
 		"align",
 	];
 
-	const stripHtmlTags = (html: string): string => {
-		const tmp = document.createElement("DIV");
-		tmp.innerHTML = html;
-		return tmp.textContent || tmp.innerText || "";
-	};
-
 	const handleKeyDown = async (event: React.KeyboardEvent) => {
 		if (event.key === "Tab") {
 			event.preventDefault();
 			const suggest = stripHtmlTags(value);
 			const promptToSend = extractWordsAfterSlash(suggest);
-			console.log(suggest);
-			console.log(promptToSend);
+
 			if (promptToSend !== "") {
 				const { data } = await axios.post("/aiassit", {
 					suggest: promptToSend,
