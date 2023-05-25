@@ -4,12 +4,13 @@ import "react-quill/dist/quill.snow.css";
 import "./custom-quill.css";
 
 import axios from "axios";
-import ReactQuill, { Quill } from "react-quill";
+import ReactQuill, { Quill, UnprivilegedEditor } from "react-quill";
 import { extractWordsAfterSlash, stripHtmlTags } from "@/utils/helpers";
 
 export const TextEditorv2 = () => {
 	const [value, setValue] = useState("");
 	const [prompt, setPrompt] = useState("");
+
 	const editorRef = React.useRef<ReactQuill>(null);
 
 	const modules = {
@@ -65,7 +66,8 @@ export const TextEditorv2 = () => {
 				});
 				const { aiPrompt } = data;
 				setPrompt(aiPrompt);
-				setValue(value + aiPrompt);
+				setValue(value + prompt);
+				// TODO: make it so that the cursor is at the end of the prompt
 			}
 		}
 	};
