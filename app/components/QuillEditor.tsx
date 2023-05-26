@@ -1,23 +1,12 @@
-export const extractWordsAfterSlash = (text: string) => {
-	const regex = /\/([^<>\r\n]+)/;
-	const match = text.match(regex);
-	if (match && match[1]) {
-		return match[1].trim();
-	}
-	return "";
+"use client";
+import React, { useState } from "react";
+import { TextEditorv3 } from "./TextEditorv3";
+
+const paraphrase = (value: string) => {
+	console.log(value);
 };
 
-export const stripHtmlTags = (html: string): string => {
-	const tmp = document.createElement("DIV");
-	tmp.innerHTML = html;
-	return tmp.textContent || tmp.innerText || "";
-};
-
-export const paraphrase = (userText: string) => {
-	console.log(userText);
-};
-
-export const modules = {
+const modules = {
 	toolbar: {
 		container: [
 			["bold", "italic", "underline", "strike"],
@@ -34,12 +23,18 @@ export const modules = {
 			["paraphrasebtn"],
 		],
 		handlers: {
-			paraphrasebtn: paraphrase,
+			paraphrasebtn: () => {
+				const editor = document.querySelector(".ql-editor");
+				if (editor) {
+					const content = editor.innerHTML;
+					paraphrase(content);
+				}
+			},
 		},
 	},
 };
 
-export const formats = [
+const formats = [
 	"header",
 	"bold",
 	"italic",
@@ -60,3 +55,18 @@ export const formats = [
 	"align",
 	"paraphrasebtn",
 ];
+
+export const QuillEditor = () => {
+	const [value, setValue] = useState("");
+
+	return (
+		<div className="mx-auto max-w-5xl mt-10 ">
+			<TextEditorv3
+				value={value}
+				setValue={setValue}
+				modules={modules}
+				formats={formats}
+			/>
+		</div>
+	);
+};

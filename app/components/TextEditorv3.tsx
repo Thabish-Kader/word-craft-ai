@@ -12,8 +12,19 @@ import {
 	stripHtmlTags,
 } from "@/utils/helpers";
 
-export const TextEditorv2 = () => {
-	const [value, setValue] = useState("");
+type TextEditorv3Props = {
+	value: string;
+	setValue: (value: string) => void;
+	modules: any;
+	formats: any;
+};
+
+export const TextEditorv3 = ({
+	value,
+	setValue,
+	modules,
+	formats,
+}: TextEditorv3Props) => {
 	const [prompt, setPrompt] = useState("");
 
 	const icons = ReactQuill.Quill.import("ui/icons");
@@ -38,7 +49,6 @@ export const TextEditorv2 = () => {
 				setPrompt(aiPrompt);
 				setValue(value + prompt);
 				// TODO: make it so that the cursor is at the end of the prompt
-				paraphrase("ehllo");
 			}
 		}
 	};
