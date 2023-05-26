@@ -5,12 +5,18 @@ import "./custom-quill.css";
 import axios from "axios";
 import ReactQuill, { Quill } from "react-quill";
 import { extractWordsAfterSlash, stripHtmlTags } from "@/utils/helpers";
-import { FaHeart } from "react-icons/fa";
+import { FaParagraph } from "react-icons/fa";
 import { CustomButton } from "./CustomButton";
 
 export const TextEditorv2 = () => {
 	const [value, setValue] = useState("");
 	const [prompt, setPrompt] = useState("");
+
+	var icons = ReactQuill.Quill.import("ui/icons");
+	icons["paraphrasebtn"] = `<svg viewbox="0 0 18 18">
+    <polygon class="ql-fill ql-stroke" points="6 10 4 12 2 10 6 10"></polygon>
+    <path class="ql-stroke" d="M8.09,13.91A4.6,4.6,0,0,0,9,14,5,5,0,1,0,4,9"></path>
+  </svg>`;
 
 	const editorRef = React.useRef<ReactQuill>(null);
 
