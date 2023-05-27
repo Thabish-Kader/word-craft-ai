@@ -19,7 +19,7 @@ export async function POST(request: Request) {
 
 	try {
 		const response =
-			"Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur eligendi explicabo ipsam voluptates in ex facilis magnam, eveniet rem corrupti dolores! Eos nesciunt autem nemo ducimus necessitatibus sequi voluptate esse?";
+			"Chaos, an enigmatic force that defies our longing for order and predictability. It is the dance of unpredictability, the symphony of disorder that lurks beneath the surface of our seemingly stable world. In chaos, the unexpected reigns supreme, challenging our desire for control and pushing the boundaries of our understanding.";
 		// const reapidApiResponse = await axios.request(options);
 		// const { response } = reapidApiResponse.data;
 
