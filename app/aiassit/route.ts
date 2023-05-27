@@ -54,7 +54,7 @@ export async function POST(request: Request) {
 					"Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur eligendi explicabo ipsam voluptates in ex facilis magnam, eveniet rem corrupti dolores! Eos nesciunt autem nemo ducimus necessitatibus sequi voluptate esse?";
 
 				resolve(NextResponse.json({ aiPrompt: response }));
-			}, 3000); // Delay of 5000 milliseconds (5 seconds)
+			}, 3000);
 		});
 
 		return responsePromise;

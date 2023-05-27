@@ -39,8 +39,6 @@ export const TextEditorv2 = () => {
 					suggest: promptToSend,
 				});
 				const { aiPrompt } = data;
-				// setPrompt(aiPrompt);
-				// setValue(aiPrompt);
 				setPromptArray([...promptArray, aiPrompt]);
 				setIsLoading(false);
 			}

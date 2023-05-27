@@ -48,10 +48,15 @@ export const modules = {
 		handlers: {
 			paraphrasebtn: async () => {
 				const editor = document.querySelector(".ql-editor");
+				const button = document.querySelector(
+					".ql-paraphrasebtn"
+				) as HTMLButtonElement;
 				if (editor) {
 					const content = editor.innerHTML;
+					button.disabled = true; // Disable the button
 					const paraphrasedContent = await paraphrase(content);
 					editor.innerHTML = paraphrasedContent;
+					button.disabled = false; // Disable the button
 				}
 			},
 		},

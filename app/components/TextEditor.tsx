@@ -1,91 +1,55 @@
 "use client";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import "./custom-quill.css";
-import dynamic from "next/dynamic";
 import axios from "axios";
+import ReactQuill from "react-quill";
+import {
+	extractWordsAfterSlash,
+	formats,
+	modules,
+	stripHtmlTags,
+} from "@/utils/helpers";
+import { Loading } from "./Loading";
+
+const icons = ReactQuill.Quill.import("ui/icons");
+icons["paraphrasebtn"] = `<svg viewbox="0 0 18 18">
+    <polygon class="ql-fill ql-stroke" points="6 10 4 12 2 10 6 10"></polygon>
+    <path class="ql-stroke" d="M8.09,13.91A4.6,4.6,0,0,0,9,14,5,5,0,1,0,4,9"></path>
+  </svg>`;
 
 export const TextEditor = () => {
 	const [value, setValue] = useState("");
 	const [prompt, setPrompt] = useState("");
-	const ReactQuill = useMemo(
-		() => dynamic(() => import("react-quill"), { ssr: false }),
-		[]
-	);
-	const editorRef = useRef(null);
-	const modules = {
-		toolbar: [
-			["bold", "italic", "underline", "strike"], // toggled buttons
-			["blockquote", "code-block"],
+	const [isLoading, setIsLoading] = useState(false);
 
-			[{ list: "ordered" }, { list: "bullet" }],
-			[{ script: "sub" }, { script: "super" }], // superscript/subscript
-			[{ indent: "-1" }, { indent: "+1" }], // outdent/indent
-			[{ direction: "rtl" }], // text direction
-
-			[{ header: [1, 2, 3, 4, 5, 6, true] }],
-
-			[{ color: [] }, { background: [] }], // dropdown with defaults from theme
-			[{ font: [] }],
-			[{ align: [] }],
-
-			["link", "image", "video"],
-		],
-	};
-
-	const formats = [
-		"header",
-		"bold",
-		"italic",
-		"underline",
-		"strike",
-		"blockquote",
-		"list",
-		"bullet",
-		"link",
-		"image",
-		"font",
-		"code-block",
-		"direction",
-		"color",
-		"background",
-		"script",
-		"indent",
-		"align",
-	];
-
-	// const giveSuggest = async () => {
-	// 	const suggest = stripHtmlTags(value);
-	// 	const { data } = await axios.post("/aiassit", {
-	// 		suggest: suggest,
-	// 	});
-	// 	const { aiPrompt } = data;
-	// 	setValue(value + aiPrompt);
-	// };
-
-	// function to strip away the html in value state
-	const stripHtmlTags = (html: string): string => {
-		const tmp = document.createElement("DIV");
-		tmp.innerHTML = html;
-		return tmp.textContent || tmp.innerText || "";
-	};
+	const editorRef = React.useRef<ReactQuill>(null);
 
 	const handleKeyDown = async (event: React.KeyboardEvent) => {
 		if (event.key === "Tab") {
 			event.preventDefault();
+
 			const suggest = stripHtmlTags(value);
-			const { data } = await axios.post("/aiassit", {
-				suggest: suggest,
-			});
-			const { aiPrompt } = data;
-			setPrompt(aiPrompt);
-			setValue(value + aiPrompt);
+			const promptToSend = extractWordsAfterSlash(suggest);
+
+			if (promptToSend !== "" && isLoading === false) {
+				setIsLoading(true);
+				const { data } = await axios.post("/aiassit", {
+					suggest: promptToSend,
+				});
+				const { aiPrompt } = data;
+				setPrompt(aiPrompt);
+				setValue(aiPrompt);
+
+				setIsLoading(false);
+			}
 		}
 	};
 
 	return (
-		<>
+		<div className="relative mx-auto max-w-5xl mt-10 ">
 			<ReactQuill
+				ref={editorRef}
 				theme="snow"
 				value={value}
 				onChange={setValue}
@@ -94,6 +58,11 @@ export const TextEditor = () => {
 				formats={formats}
 				className=" text-gray-300 "
 			/>
-		</>
+			{isLoading && (
+				<div className="absolute top-[50%]  flex w-full flex-col items-center justify-center">
+					<Loading />
+				</div>
+			)}
+		</div>
 	);
 };
