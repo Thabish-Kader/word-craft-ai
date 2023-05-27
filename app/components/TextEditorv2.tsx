@@ -21,6 +21,7 @@ icons["paraphrasebtn"] = `<svg viewbox="0 0 18 18">
 export const TextEditorv2 = () => {
 	const [value, setValue] = useState("");
 	const [prompt, setPrompt] = useState("");
+	const [promptArray, setPromptArray] = useState<string[]>([]);
 	const [isLoading, setIsLoading] = useState(false);
 
 	const editorRef = React.useRef<ReactQuill>(null);
@@ -38,12 +39,17 @@ export const TextEditorv2 = () => {
 					suggest: promptToSend,
 				});
 				const { aiPrompt } = data;
-				setPrompt(aiPrompt);
-				setValue(aiPrompt);
+				// setPrompt(aiPrompt);
+				// setValue(aiPrompt);
+				setPromptArray([...promptArray, aiPrompt]);
 				setIsLoading(false);
 			}
 		}
 	};
+
+	useEffect(() => {
+		setValue(promptArray.join("<p>"));
+	}, [promptArray]);
 
 	return (
 		<div className="relative mx-auto max-w-5xl mt-10 ">
