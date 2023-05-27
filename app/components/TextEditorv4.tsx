@@ -20,7 +20,7 @@ icons["paraphrasebtn"] = `<svg viewbox="0 0 18 18">
     <path class="ql-stroke" d="M8.09,13.91A4.6,4.6,0,0,0,9,14,5,5,0,1,0,4,9"></path>
   </svg>`;
 
-export const TextEditorv2 = () => {
+export const TextEditorv4 = () => {
 	const [value, setValue] = useState("");
 	const [promptArray, setPromptArray] = useState<string[]>([]);
 	const [isLoading, setIsLoading] = useState(false);

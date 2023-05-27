@@ -53,10 +53,10 @@ export const modules = {
 				) as HTMLButtonElement;
 				if (editor) {
 					const content = editor.innerHTML;
-					button.disabled = true; // Disable the button
+					button.disabled = true;
 					const paraphrasedContent = await paraphrase(content);
 					editor.innerHTML = paraphrasedContent;
-					button.disabled = false; // Disable the button
+					button.disabled = false;
 				}
 			},
 		},
