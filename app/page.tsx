@@ -7,8 +7,8 @@ export default function Home() {
 	return (
 		<main className="mx-auto max-w-5xl mt-10 ">
 			{/* <TextEditor /> */}
-			{/* <TextEditorv2 /> */}
-			<QuillEditor />
+			<TextEditorv2 />
+			{/* <QuillEditor /> */}
 		</main>
 	);
 }

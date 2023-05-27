@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export const extractWordsAfterSlash = (text: string) => {
 	const regex = /\/([^<>\r\n]+)/;
 	const match = text.match(regex);
@@ -13,8 +15,13 @@ export const stripHtmlTags = (html: string): string => {
 	return tmp.textContent || tmp.innerText || "";
 };
 
-export const paraphrase = (userText: string) => {
-	console.log(userText);
+export const paraphrase = async (userText: string) => {
+	const text = stripHtmlTags(userText);
+	const { data } = await axios.post("/paraphrase", {
+		textToParaphrase: text,
+	});
+	const { aiPrompt } = data;
+	return aiPrompt;
 };
 
 export const modules = {
@@ -34,7 +41,14 @@ export const modules = {
 			["paraphrasebtn"],
 		],
 		handlers: {
-			paraphrasebtn: paraphrase,
+			paraphrasebtn: async () => {
+				const editor = document.querySelector(".ql-editor");
+				if (editor) {
+					const content = editor.innerHTML;
+					const paraphrasedContent = await paraphrase(content);
+					editor.innerHTML = paraphrasedContent;
+				}
+			},
 		},
 	},
 };
