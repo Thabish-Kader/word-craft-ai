@@ -17,11 +17,16 @@ export const stripHtmlTags = (html: string): string => {
 
 export const paraphrase = async (userText: string) => {
 	const text = stripHtmlTags(userText);
-	const { data } = await axios.post("/paraphrase", {
-		textToParaphrase: text,
-	});
-	const { aiPrompt } = data;
-	return aiPrompt;
+	if (text !== "") {
+		const { data } = await axios.post("/paraphrase", {
+			textToParaphrase: text,
+		});
+		const { aiPrompt } = data;
+		return aiPrompt;
+	} else {
+		alert("Please enter some text");
+		return "";
+	}
 };
 
 export const modules = {

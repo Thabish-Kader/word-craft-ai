@@ -5,7 +5,7 @@ import { QuillEditor } from "./components/QuillEditor";
 
 export default function Home() {
 	return (
-		<main className="mx-auto max-w-5xl mt-10 ">
+		<main className="">
 			{/* <TextEditor /> */}
 			<TextEditorv2 />
 			{/* <QuillEditor /> */}
