@@ -18,8 +18,11 @@ export async function POST(request: Request) {
 	};
 
 	try {
+		// For testing purpose only
 		const response =
 			"Chaos, a mysterious power that goes against our yearning for structure and foresight. It embodies the unpredictable choreography, the harmonious disarray that resides beneath the façade of our apparently steady reality. Within chaos, the element of surprise takes center stage, defying our need for dominance and expanding the limits of our comprehension.";
+
+		// use this if you want to get the actual response
 		// const reapidApiResponse = await axios.request(options);
 		// const { response } = reapidApiResponse.data;
 
