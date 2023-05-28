@@ -36,19 +36,19 @@ export const TextEditorv4 = () => {
 			event.preventDefault();
 
 			const suggest = stripHtmlTags(value);
-			const promptToSend = extractWordsAfterSlash(suggest);
 
-			if (promptToSend !== "" && isLoading === false) {
+			if (suggest !== "" && isLoading === false) {
 				setIsLoading(true);
 				const { data } = await axios.post("/aiassit", {
-					suggest: promptToSend,
+					suggest: suggest,
 				});
 				const { aiPrompt } = data;
 
-				// Replace the text that starts with '/'
-				const cleanText = stripHtmlTags(value);
-				const updatedValue = cleanText.replace(/\/\w+/, aiPrompt);
-				setValue("<p>" + updatedValue + "</p>");
+				const updatedValue = suggest.replace(
+					/\/\w+/,
+					`<p>${aiPrompt}</p>`
+				);
+				setValue(updatedValue);
 
 				setIsLoading(false);
 				console.log(updatedValue);
