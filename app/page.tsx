@@ -7,8 +7,8 @@ import { TextEditorv4 } from "./components/TextEditorv4";
 export default function Home() {
 	return (
 		<main>
-			{/* <TextEditor /> */}
-			<TextEditorv2 />
+			<TextEditor />
+			{/* <TextEditorv2 /> */}
 			{/* <TextEditorv4 /> */}
 		</main>
 	);

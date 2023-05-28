@@ -44,15 +44,17 @@ export const TextEditorv4 = () => {
 					suggest: promptToSend,
 				});
 				const { aiPrompt } = data;
-				setPromptArray([...promptArray, aiPrompt]);
+
+				// Replace the text that starts with '/'
+				const cleanText = stripHtmlTags(value);
+				const updatedValue = cleanText.replace(/\/\w+/, aiPrompt);
+				setValue("<p>" + updatedValue + "</p>");
+
 				setIsLoading(false);
+				console.log(updatedValue);
 			}
 		}
 	};
-
-	useEffect(() => {
-		setValue(promptArray.join("<p>"));
-	}, [promptArray]);
 
 	return (
 		<div className="relative mx-auto max-w-5xl mt-10 ">

@@ -1,9 +1,9 @@
 "use client";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import "./custom-quill.css";
 import axios from "axios";
-import ReactQuill from "react-quill";
+
 import {
 	extractWordsAfterSlash,
 	formats,
@@ -11,6 +11,9 @@ import {
 	stripHtmlTags,
 } from "@/utils/helpers";
 import { Loading } from "./Loading";
+
+import ReactQuill from "react-quill";
+import dynamic from "next/dynamic";
 
 const icons = ReactQuill.Quill.import("ui/icons");
 icons["paraphrasebtn"] = `<svg viewbox="0 0 18 18">
@@ -20,10 +23,13 @@ icons["paraphrasebtn"] = `<svg viewbox="0 0 18 18">
 
 export const TextEditor = () => {
 	const [value, setValue] = useState("");
-	const [prompt, setPrompt] = useState("");
+	const [promptArray, setPromptArray] = useState<string[]>([]);
 	const [isLoading, setIsLoading] = useState(false);
 
-	const editorRef = React.useRef<ReactQuill>(null);
+	const OptimizedReactQuill = useMemo(
+		() => dynamic(() => import("react-quill"), { ssr: false }),
+		[]
+	);
 
 	const handleKeyDown = async (event: React.KeyboardEvent) => {
 		if (event.key === "Tab") {
@@ -38,25 +44,28 @@ export const TextEditor = () => {
 					suggest: promptToSend,
 				});
 				const { aiPrompt } = data;
-				setPrompt(aiPrompt);
-				setValue(aiPrompt);
+
+				// Replace the text that starts with '/'
+				const cleanText = stripHtmlTags(value);
+				const updatedValue = cleanText.replace(/\/\w+/, aiPrompt);
+				setValue("<p>" + updatedValue + "</p>");
 
 				setIsLoading(false);
+				console.log(updatedValue);
 			}
 		}
 	};
 
 	return (
 		<div className="relative mx-auto max-w-5xl mt-10 ">
-			<ReactQuill
-				ref={editorRef}
+			<OptimizedReactQuill
 				theme="snow"
 				value={value}
 				onChange={setValue}
 				modules={modules}
 				onKeyDown={handleKeyDown}
 				formats={formats}
-				className=" text-gray-300 "
+				className="text-gray-300"
 			/>
 			{isLoading && (
 				<div className="absolute top-[50%]  flex w-full flex-col items-center justify-center">
