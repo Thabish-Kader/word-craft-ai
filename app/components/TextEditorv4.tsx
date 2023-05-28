@@ -1,5 +1,12 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+	ComponentType,
+	forwardRef,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
 import "react-quill/dist/quill.snow.css";
 import "./custom-quill.css";
 import axios from "axios";
@@ -12,9 +19,11 @@ import {
 } from "@/utils/helpers";
 import { Loading } from "./Loading";
 
-import ReactQuill from "react-quill";
+import dynamic from "next/dynamic";
+import { Quill } from "react-quill";
+import { FaRecycle } from "react-icons/fa";
 
-const icons = ReactQuill.Quill.import("ui/icons");
+const icons = Quill.import("ui/icons");
 icons["paraphrasebtn"] = `<svg viewbox="0 0 18 18">
     <polygon class="ql-fill ql-stroke" points="6 10 4 12 2 10 6 10"></polygon>
     <path class="ql-stroke" d="M8.09,13.91A4.6,4.6,0,0,0,9,14,5,5,0,1,0,4,9"></path>
@@ -25,7 +34,10 @@ export const TextEditorv4 = () => {
 	const [promptArray, setPromptArray] = useState<string[]>([]);
 	const [isLoading, setIsLoading] = useState(false);
 
-	const editorRef = useRef<ReactQuill>(null);
+	const OptimizedReactQuill = useMemo(
+		() => dynamic(() => import("react-quill"), { ssr: false }),
+		[]
+	);
 
 	const handleKeyDown = async (event: React.KeyboardEvent) => {
 		if (event.key === "Tab") {
@@ -52,8 +64,7 @@ export const TextEditorv4 = () => {
 
 	return (
 		<div className="relative mx-auto max-w-5xl mt-10 ">
-			<ReactQuill
-				ref={editorRef}
+			<OptimizedReactQuill
 				theme="snow"
 				value={value}
 				onChange={setValue}
