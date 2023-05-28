@@ -1,15 +1,10 @@
 "use client";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo, useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import "./custom-quill.css";
 import axios from "axios";
 
-import {
-	extractWordsAfterSlash,
-	formats,
-	modules,
-	stripHtmlTags,
-} from "@/utils/helpers";
+import { formats, modules, stripHtmlTags } from "@/utils/helpers";
 import { Loading } from "./Loading";
 
 import ReactQuill from "react-quill";
@@ -23,7 +18,6 @@ icons["paraphrasebtn"] = `<svg viewbox="0 0 18 18">
 
 export const TextEditorv4 = () => {
 	const [value, setValue] = useState("");
-	const [promptArray, setPromptArray] = useState<string[]>([]);
 	const [isLoading, setIsLoading] = useState(false);
 
 	const OptimizedReactQuill = useMemo(
@@ -55,6 +49,10 @@ export const TextEditorv4 = () => {
 			}
 		}
 	};
+
+	// useEffect(() => {
+	// 	setValue(promptArray.join("<p>"));
+	// }, [promptArray]);
 
 	return (
 		<div className="relative mx-auto max-w-5xl mt-10 ">
