@@ -8,9 +8,8 @@ export default function Home() {
 	return (
 		<main>
 			{/* <TextEditor /> */}
-			{/* <TextEditorv2 /> */}
-
-			<TextEditorv4 />
+			<TextEditorv2 />
+			{/* <TextEditorv4 /> */}
 		</main>
 	);
 }
