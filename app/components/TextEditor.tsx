@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo, useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import "./custom-quill.css";
 import axios from "axios";
@@ -23,7 +23,6 @@ icons["paraphrasebtn"] = `<svg viewbox="0 0 18 18">
 
 export const TextEditor = () => {
 	const [value, setValue] = useState("");
-	const [promptArray, setPromptArray] = useState<string[]>([]);
 	const [isLoading, setIsLoading] = useState(false);
 
 	const OptimizedReactQuill = useMemo(
@@ -37,7 +36,6 @@ export const TextEditor = () => {
 
 			const suggest = stripHtmlTags(value);
 			const promptToSend = extractWordsAfterSlash(suggest);
-
 			if (promptToSend !== "" && isLoading === false) {
 				setIsLoading(true);
 				const { data } = await axios.post("/aiassit", {
@@ -45,16 +43,21 @@ export const TextEditor = () => {
 				});
 				const { aiPrompt } = data;
 
-				// Replace the text that starts with '/'
-				const cleanText = stripHtmlTags(value);
-				const updatedValue = cleanText.replace(/\/\w+/, aiPrompt);
-				setValue("<p>" + updatedValue + "</p>");
+				const updatedValue = suggest.replace(
+					/\/\w+/,
+					`<p>${aiPrompt}</p>`
+				);
+				setValue(updatedValue);
 
 				setIsLoading(false);
 				console.log(updatedValue);
 			}
 		}
 	};
+
+	// useEffect(() => {
+	// 	setValue(promptArray.join("<p>"));
+	// }, [promptArray]);
 
 	return (
 		<div className="relative mx-auto max-w-5xl mt-10 ">
