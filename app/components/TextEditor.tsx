@@ -12,9 +12,16 @@ import {
 } from "@/utils/helpers";
 import { Loading } from "./Loading";
 
-import ReactQuill from "react-quill";
 import dynamic from "next/dynamic";
+import ReactQuill from "react-quill";
 
+if (typeof document !== "undefined") {
+	const icons = ReactQuill.Quill.import("ui/icons");
+	icons["paraphrasebtn"] = `<svg viewbox="0 0 18 18">
+    <polygon class="ql-fill ql-stroke" points="6 10 4 12 2 10 6 10"></polygon>
+    <path class="ql-stroke" d="M8.09,13.91A4.6,4.6,0,0,0,9,14,5,5,0,1,0,4,9"></path>
+  </svg>`;
+}
 export const TextEditor = () => {
 	const [value, setValue] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
@@ -48,14 +55,6 @@ export const TextEditor = () => {
 			}
 		}
 	};
-
-	useEffect(() => {
-		const icons = ReactQuill.Quill.import("ui/icons");
-		icons["paraphrasebtn"] = `<svg viewbox="0 0 18 18">
-    <polygon class="ql-fill ql-stroke" points="6 10 4 12 2 10 6 10"></polygon>
-    <path class="ql-stroke" d="M8.09,13.91A4.6,4.6,0,0,0,9,14,5,5,0,1,0,4,9"></path>
-  </svg>`;
-	}, []);
 
 	return (
 		<div className="relative mx-auto max-w-5xl mt-10 ">
