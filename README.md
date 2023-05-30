@@ -29,3 +29,7 @@ Ai Assist
 
 Paraphrase
 ![paraphrase](https://github.com/Thabish-Kader/word-craft-ai/assets/76642519/64b07349-f8cb-4356-b5eb-ad423a25f76d)
+
+## Resources
+
+-   [Rapid API](https://rapidapi.com/amarsini/api/ai-writer1/)
