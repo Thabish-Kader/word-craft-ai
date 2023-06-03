@@ -17,7 +17,8 @@
 
 WordCraftAI is a web app designed to empower and inspire creative writers by combining the power of artificial intelligence with the art of storytelling. With WordCraftAI, users can tap into the vast capabilities of AI to enhance their writing process, generate ideas, and receive personalized suggestions to improve their creative works.
 
-I will be showing how i built this to my team [here soon](https://www.youtube.com/@developertak)
+## YT
+[![Building an AI Text Editor : Create your own writing companion](https://ytcards.demolab.com/?id=sbltsNXuiso&title=Building+an+AI+Text+Editor+%3A+Create+your+own+writing+companion&lang=en&timestamp=1685736014&background_color=%230d1117&title_color=%23ffffff&stats_color=%23dedede&width=250 "Building an AI Text Editor : Create your own writing companion")](https://www.youtube.com/watch?v=sbltsNXuiso)
 
 Features
 
